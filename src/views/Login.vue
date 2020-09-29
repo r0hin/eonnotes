@@ -1,31 +1,102 @@
 <template>
   <div class="home">
-
     <div class="center content-inputs">
       <div class="content-title">
         <h1>Welcome Back!</h1>
       </div>
-      <form>
+      <form v-on:submit.prevent="login()">
           <vs-input primary v-model="value" placeholder="Email" />
           <br />
-          <vs-input type="password" icon-after v-model="value2" placeholder="Password">
+          <vs-input v-on:keyup.enter="login()" type="password" icon-after v-model="value2" placeholder="Password">
             <template #icon>
               <i class='bx bx-lock-open-alt'></i>
             </template>
           </vs-input>
       </form>  
       <br>
+      <vs-alert v-bind:class="{hidden: hideError, dangerwarning: true,}" danger>
+        <template #title>
+          Error
+        </template>
+        <p>{{errorMessage}}</p>
+      </vs-alert>
+      <p>{{value}} {{value2}} </p>
       <div class="submitdiv">
-        <vs-button class="signbtn" @click="redirectToApp()">Login</vs-button> 
-        <vs-button class="signbtn" @click="redirectToApp()">Sign Up</vs-button>
+        <vs-button class="signbtn" @click="login()">Login</vs-button> 
+        <vs-button class="signbtn" @click="signup()">Sign Up</vs-button>
       </div>
-<br>
+    <br>
     </div>
 
   </div>
 </template>
 
+<script>
+  import Vue from 'vue'
+  import VueRouter from 'vue-router'
+  import Vuesax from 'vuesax'
+  import 'vuesax/dist/vuesax.css'
+
+  Vue.use(Vuesax)
+  Vue.use(VueRouter)
+
+  export default {
+    name: 'Login',
+    components: {},
+    data() {
+      return {
+        value: '',
+        value2: '',
+        hideError: true,
+        errorMessage: '',
+      }
+    },
+    methods: {
+      login() {
+
+        const firebase = this.$firebase
+
+        if (!this.value || !this.value2) {
+          this.hideError = false
+          this.errorMessage = 'Fill out all fields.'
+          return;
+        }
+    
+        firebase.auth().signInWithEmailAndPassword(this.value, this.value2).then(() => {
+        }).catch((err) => {
+          this.hideError = false
+          this.errorMessage = err.message
+        })
+      },
+      signup() {
+        const firebase = this.$firebase
+
+        if (!this.value || !this.value2) {
+          this.hideError = false
+          this.errorMessage = 'Fill out all fields.'
+          return;
+        }
+    
+        firebase.auth().createUserWithEmailAndPassword(this.value, this.value2).then(() => {
+          this.$router.push({path: "/app"}).catch(() => {})
+        }).catch((err) => {
+          this.hideError = false
+          this.errorMessage = err.message
+        })
+      }
+    }
+  }
+</script>
+
 <style>
+
+.dangerwarning {
+  max-width: 300px;
+}
+
+.hidden {
+  display: none;
+}
 
 .signbtn {
   display: inline-block;
@@ -61,38 +132,3 @@
   margin-bottom: 24px;
 }
 </style>
-
-<script>
-  import Vue from 'vue'
-  import VueRouter from 'vue-router'
-  import Vuesax from 'vuesax'
-  import * as firebase from "firebase";
-  import 'vuesax/dist/vuesax.css'
-
-  Vue.use(Vuesax)
-  Vue.use(VueRouter)
-  Vue.use(firebase)
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBi2Vg9UQfkK7y7FEmEb4oySB0loDFNg0M",
-    authDomain: "eonnote-78e57.firebaseapp.com",
-    databaseURL: "https://eonnote-78e57.firebaseio.com",
-    projectId: "eonnote-78e57",
-    storageBucket: "eonnote-78e57.appspot.com",
-    messagingSenderId: "424859217085",
-    appId: "1:424859217085:web:c6894536bbad6254fa5bd4"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  export default {
-    name: 'Login',
-    components: {},
-
-    methods: {
-      redirectToApp() {
-        this.$router.push({ path: '/app' });
-      },
-    }
-  }
-</script>
