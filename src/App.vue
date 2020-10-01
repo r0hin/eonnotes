@@ -7,6 +7,7 @@
 <style>
 body {
   font-family: Ubuntu;
+  background-color: rgb(243, 243, 243);
 }
 </style>
 

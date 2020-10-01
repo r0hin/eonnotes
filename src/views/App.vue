@@ -1,15 +1,11 @@
 <template>
   <div id="app">
-
-    <div id="tab-home" :class="homeTabClass">
-      <h1>Home Tab</h1>
+    <div id="tab-notes" class="tab" :class="notesTabClass">
+      <NotesHeader @onCreate="refreshNotes"></NotesHeader>
+      <NotesList ref="list"> </NotesList>
     </div>
 
-    <div id="tab-notes" :class="notesTabClass">
-      <h1>Notes Tab</h1>
-    </div>
-
-    <div id="tab-user" :class="userTabClass">
+    <div id="tab-user" class="tab" :class="userTabClass">
       <h1>User Tab</h1>
     </div>
 
@@ -25,24 +21,29 @@
   import 'vuesax/dist/vuesax.css'
 
   // Custom Components
+  import NotesHeader from '../components/NotesHeader'
   import Navigation from '../components/Navigation'
+  import NotesList from '../components/NotesList'
+
 
   Vue.use(Vuesax)
   Vue.use(VueRouter)
 
   export default {
     name: 'App',
-    components: {Navigation},
+    components: {Navigation, NotesHeader, NotesList},
     data() {
       return {
-        homeTabClass: '',
-        notesTabClass: 'hidden',
+        notesTabClass: '',
         userTabClass: 'hidden',
       }
     },
     methods: {
+      refreshNotes() {
+        this.$refs.list.freshNotes()
+      },
+
       switchTab(event) {
-        this.homeTabClass = 'hidden'
         this.notesTabClass = 'hidden'
         this.userTabClass = 'hidden'
         this[event + 'TabClass'] = ''
@@ -54,5 +55,9 @@
 <style scoped>
 .hidden {
   display: none;
+}
+
+.tab {
+  padding: 24px;
 }
 </style>

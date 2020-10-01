@@ -1,11 +1,6 @@
 <template>
   <div class="nav">
     <div class="navitem">
-      <vs-button @click="tabe('home')" class="btno" :class="activeHome">
-        <i class='bx bxs-home'></i>
-      </vs-button>
-    </div>
-    <div class="navitem">
       <vs-button @click="tabe('notes')" class="btno" :class="activeNotes">
         <i class='bx bxs-notepad'></i>
       </vs-button>
@@ -28,8 +23,7 @@ export default {
   name: 'Navigation',
   data() {
       return {
-        activeHome: '',
-        activeNotes: 'inactive',
+        activeNotes: '',
         activeUser: 'inactive',
       }
     },
@@ -38,19 +32,12 @@ export default {
     tabe(tab) {
       this.$emit('changedTab', tab);
       switch (tab) {
-        case 'home':
-          this.activeHome = ''
-          this.activeNotes = 'inactive'
-          this.activeUser = 'inactive'
-          break;
         case 'notes':
           this.activeNotes = ''
-          this.activeHome = 'inactive'
           this.activeUser = 'inactive'
           break;
         case 'user':
           this.activeUser = ''
-          this.activeHome = 'inactive'
           this.activeNotes = 'inactive'
           break;
         default:
@@ -65,22 +52,25 @@ export default {
   .inactive {
     background-color: #ffffff;
     color: rgb(65, 65, 65);
-    font-size: 14px;
   }
 
   .btno {
     width: 70%;
     padding: 6px;
+    font-size: 18px;
   }
   .nav {
     position: fixed;
-    bottom: 0px; left: 0px;
-    width: 100%; height: 90px;
-    background-color: #F4F7F8;
+    bottom: 24px; left: 50%;
+    transform: translate(-50%, 0);
+    width: 90%; height: 90px;
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
 
+    box-shadow: 0px 8px 24px rgb(0, 0, 0, 0.1);
     display: grid;
-    grid-template-columns: auto auto auto;
-
+    grid-template-columns: auto auto;
   }
 
   .navitem {

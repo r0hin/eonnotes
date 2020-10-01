@@ -2,7 +2,7 @@
   <div class="home">
     <div class="center content-inputs">
       <div class="content-title">
-        <h1>Welcome Back!</h1>
+        <h1>Welcome!</h1>
       </div>
       <form v-on:submit.prevent="login()">
           <vs-input primary v-model="value" placeholder="Email" />
