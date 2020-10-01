@@ -67,7 +67,7 @@ export default {
     border-radius: 24px;
     background-color: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(10px);
-
+    z-index: 4;
     box-shadow: 0px 8px 24px rgb(0, 0, 0, 0.1);
     display: grid;
     grid-template-columns: auto auto;

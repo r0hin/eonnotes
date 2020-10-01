@@ -3,25 +3,7 @@
         <p>Your Notes</p>
 
         <div id="notes">
-            <div class="note animated fadeIn" v-for="note in this.notes" v-bind:key="note.id">
-                <vs-card class="note_content">
-                    <template #title>
-                        <h3>{{ note.name }} </h3>
-                    </template>
-                    <template #text>
-                        <p> {{note.preview}} </p>
-                    </template>
-                    <template #buttons>
-                        <vs-button class="btn-delete" danger>
-                            <i class='bx bx-trash' ></i>
-                        </vs-button>
-                        <vs-button class="btn-chat" primary>
-                            <i class='bx bx-message-square-edit' ></i>
-                        </vs-button>
-                    </template>
-                </vs-card>
-
-            </div>
+            <Note class="note" :noteData="note" v-for="note in this.notes" v-bind:key="note.id"> </Note>
         </div>
 
     </div>
@@ -31,6 +13,9 @@
 import Vue from 'vue'
 import Vuesax from 'vuesax'
 import Vuex from 'vuex'
+
+// Custom Components
+import Note from '../components/Note'
 
 Vue.use(Vuesax)
 Vue.use(Vuex)
@@ -45,7 +30,7 @@ export default {
     mounted () {
         this.freshNotes()
     },
-
+    components: {Note},
     props: [],
     methods: {
         async freshNotes() {
@@ -82,6 +67,7 @@ export default {
     /* Not scoped */
     .note_content .vs-card {
         height: 200px;
+        width: 100%;
     }
 
     .vs-card__buttons {
