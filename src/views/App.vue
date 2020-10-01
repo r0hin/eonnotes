@@ -1,7 +1,20 @@
 <template>
-  <div class="about">
-    <h1>You are signed in!</h1>
-    <button @click="logOut()">Logout</button>
+  <div id="app">
+
+    <div id="tab-home" :class="homeTabClass">
+      <h1>Home Tab</h1>
+    </div>
+
+    <div id="tab-notes" :class="notesTabClass">
+      <h1>Notes Tab</h1>
+    </div>
+
+    <div id="tab-user" :class="userTabClass">
+      <h1>User Tab</h1>
+    </div>
+
+    <Navigation @changedTab="switchTab"></Navigation>
+
   </div>
 </template>
 
@@ -11,24 +24,35 @@
   import Vuesax from 'vuesax'
   import 'vuesax/dist/vuesax.css'
 
+  // Custom Components
+  import Navigation from '../components/Navigation'
+
   Vue.use(Vuesax)
   Vue.use(VueRouter)
 
   export default {
     name: 'App',
-    components: {},
+    components: {Navigation},
     data() {
       return {
-        
+        homeTabClass: '',
+        notesTabClass: 'hidden',
+        userTabClass: 'hidden',
       }
     },
     methods: {
-      logOut() {
-        const firebase = this.$firebase
-        firebase.auth().signOut().then(() => {
-
-        })
-      }
+      switchTab(event) {
+        this.homeTabClass = 'hidden'
+        this.notesTabClass = 'hidden'
+        this.userTabClass = 'hidden'
+        this[event + 'TabClass'] = ''
+      },
     }
   }
 </script>
+
+<style scoped>
+.hidden {
+  display: none;
+}
+</style>

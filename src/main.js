@@ -44,7 +44,7 @@ firebase.auth().onAuthStateChanged(user => {
     // User is signed in
     store.commit('updateUser', user);
     app.$mount('#app');
-    router.push('/app')
+    router.push("/app").catch(()=>{});
   }
   else {
     // User is not signed in

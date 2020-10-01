@@ -18,9 +18,7 @@
         <template #title>
           Error
         </template>
-        <p>{{errorMessage}}</p>
       </vs-alert>
-      <p>{{value}} {{value2}} </p>
       <div class="submitdiv">
         <vs-button class="signbtn" @click="login()">Login</vs-button> 
         <vs-button class="signbtn" @click="signup()">Sign Up</vs-button>
