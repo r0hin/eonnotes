@@ -3,6 +3,7 @@
     <div id="tab-notes" class="tab" :class="notesTabClass">
       <NotesHeader @onCreate="refreshNotes"></NotesHeader>
       <NotesList ref="list"> </NotesList>
+      <br><br><br><br><br><br><br>
     </div>
 
     <div id="tab-user" class="tab" :class="userTabClass">
@@ -10,46 +11,44 @@
     </div>
 
     <Navigation @changedTab="switchTab"></Navigation>
-
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VueRouter from 'vue-router'
-  import Vuesax from 'vuesax'
-  import 'vuesax/dist/vuesax.css'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Vuesax from "vuesax";
+import "vuesax/dist/vuesax.css";
 
-  // Custom Components
-  import NotesHeader from '../components/NotesHeader'
-  import Navigation from '../components/Navigation'
-  import NotesList from '../components/NotesList'
+// Custom Components
+import NotesHeader from "../components/NotesHeader";
+import Navigation from "../components/Navigation";
+import NotesList from "../components/NotesList";
 
+Vue.use(Vuesax);
+Vue.use(VueRouter);
 
-  Vue.use(Vuesax)
-  Vue.use(VueRouter)
-
-  export default {
-    name: 'App',
-    components: {Navigation, NotesHeader, NotesList},
-    data() {
-      return {
-        notesTabClass: '',
-        userTabClass: 'hidden',
-      }
+export default {
+  name: "App",
+  components: { Navigation, NotesHeader, NotesList },
+  data() {
+    return {
+      notesTabClass: "",
+      userTabClass: "hidden",
+    };
+  },
+  methods: {
+    refreshNotes() {
+      this.$refs.list.freshNotes();
     },
-    methods: {
-      refreshNotes() {
-        this.$refs.list.freshNotes()
-      },
 
-      switchTab(event) {
-        this.notesTabClass = 'hidden'
-        this.userTabClass = 'hidden'
-        this[event + 'TabClass'] = ''
-      },
-    }
-  }
+    switchTab(event) {
+      this.notesTabClass = "hidden";
+      this.userTabClass = "hidden";
+      this[event + "TabClass"] = "";
+    },
+  },
+};
 </script>
 
 <style scoped>
