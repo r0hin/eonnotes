@@ -4,6 +4,7 @@
 
     <div id="notes">
       <Note
+        @onDescriptionChange="updateDesc"
         class="note"
         :noteData="note"
         v-for="note in this.notes"
@@ -38,6 +39,31 @@ export default {
   components: { Note },
   props: [],
   methods: {
+    async updateDesc(event) {
+      const db = this.$firebase.firestore();
+      const user = this.$store.state.user;
+
+      const doc = await db.collection('users').doc(user.uid).get()
+
+      const newArray = doc.data().notes
+
+      const index = doc.data().notes.findIndex(obj => obj.id == event.id)
+
+      newArray[index].preview = event.input
+
+      await db.collection('users').doc(user.uid).update({
+        notes: newArray
+      })
+
+      this.freshNotes()
+
+      this.$vs.notification({
+        color: "success",
+        position: "top-right",
+        title: "Saved",
+        text: `Description of ${event.name} saved successfully.`,
+      });
+    },
     async freshNotes() {
       const db = this.$firebase.firestore();
       const user = this.$store.state.user;

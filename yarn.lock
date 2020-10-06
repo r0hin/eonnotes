@@ -861,6 +861,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@editorjs/code@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/code/-/code-2.6.0.tgz#402df60d788e211894fde755c5435ba26cc075da"
+  integrity sha512-vJL8EebHQ6cNT1iPmlAtQN5gIy5gAPyElwJDVwOOgczZGR0vstCjwLP9YY2ThsHMv1dwiUXO0JsRqw9m5W7GDw==
+
 "@editorjs/editorjs@^2.18.0":
   version "2.18.0"
   resolved "https://registry.yarnpkg.com/@editorjs/editorjs/-/editorjs-2.18.0.tgz#bde42183013f5ca98693e77986cc9d8b2c9a1244"
@@ -868,6 +873,31 @@
   dependencies:
     codex-notifier "^1.1.2"
     codex-tooltip "^1.0.1"
+
+"@editorjs/embed@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/embed/-/embed-2.4.0.tgz#589a579df9766f5f675af0f39408eb862fd5b4f3"
+  integrity sha512-sGX0KfPszeGBrlBYlgB1vPn/RYRQ/ORcEb9C2kUnFpmRU+R2yb7t+YD9r4DceTyODTK91imYx1YczMlBewGLDA==
+
+"@editorjs/header@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/header/-/header-2.6.0.tgz#64d1c6af7eefd7ad272d12dbf7ccef8b56771240"
+  integrity sha512-1psNX/irDjJ8Bp1l7DjkYWz7IBtjVIRANk7kPkNoY2CfAeeCFYbJmMlXdqTF2WeAjYv2WMy5ey/aR5fTccgFaw==
+
+"@editorjs/marker@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@editorjs/marker/-/marker-1.2.2.tgz#d9261a257436bf70179c0fa1e766ab85c823c96b"
+  integrity sha512-BN/IHbVKKahGnMAiBOV5U7XUjfF6JkIkTZ6qNLxtTr7PUPM8UsJV8G8pyll9CX+XRUYYZyokA2kEBHTS4vUyyw==
+
+"@editorjs/quote@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/quote/-/quote-2.4.0.tgz#effe570f9055831a230e0417fafa6091a6169a47"
+  integrity sha512-IWOBWjL2ngPP63GcIAltyD9kc7OVZFma4kS+T5JRHvKKDspYsnmrxsbRmCPc+coZQzqPxXHkiOZuNMdmGX/Y3w==
+
+"@editorjs/simple-image@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@editorjs/simple-image/-/simple-image-1.4.0.tgz#4c96a3304f3cf477ccb13de82f40d03bd42e6c0e"
+  integrity sha512-rARMYyTP7OUzf+YhrgUpXzc1yHhER6a9G8mxdnuSF0N9Kt8r1BGqe808YNs20TfMRpYgMXHvP9iiKGgooSPhmg==
 
 "@firebase/analytics-types@0.4.0":
   version "0.4.0"

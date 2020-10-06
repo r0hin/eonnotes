@@ -1,11 +1,28 @@
 <template>
   <div>
+    <vs-dialog width="300px" not-center v-model="active4">
+      <div class="cenetered">
+        <h2>New Description</h2>
+        <vs-input
+          class="noteinput"
+          v-model="descinput"
+          placeholder="Updated description"
+        ></vs-input>
+      </div>
+      <div class="btnCenter">
+        <vs-button @click=" active4 = false; updateDescription(); " >
+          Update Description
+        </vs-button>
+        <vs-button @click="active4 = false" transparent> Cancel </vs-button>
+      </div>
+    </vs-dialog>
+
     <div class="fullNote animated faster" :class="{
       'hidden': hideFull,
       'fadeInUp': fullFadeTrue,
       'fadeOutDown': fullFadeFalse,
     }">
-      <h1>{{ noteData.name }}</h1>
+      <h1>{{ noteData.name }} <small class="conditional"><i v-if="saved" class="bx bx-check yei"></i>  <i v-else class="bx bx-cloud-upload nei"></i> {{saved ? 'Synced' : 'Saving...'}}</small></h1>
       <vs-button @click="closeNote" class="closeNote" danger flat>
         <i class="bx bx-message-alt-x"></i>
       </vs-button>
@@ -13,12 +30,7 @@
       <br> <br> <br> <br>
 
       <div :id="noteData.id + 'editor'"></div>
-
-      <center>
-        <vs-button @click="save"> Save </vs-button>
-      </center>
-
-      <br> <br> <br> <br> <br> <br> <br> <br>
+      <br> <br> <br> <br> <br> <br>
 
     </div>
     <vs-card @click="showNote" class="note_content">
@@ -29,10 +41,7 @@
         <p>{{ noteData.preview }}</p>
       </template>
       <template #buttons>
-        <vs-button class="btn-delete" danger>
-          <i class="bx bx-trash"></i>
-        </vs-button>
-        <vs-button class="btn-chat" primary>
+        <vs-button @click="editDesc($event)" class="btn-chat" primary>
           <i class="bx bx-message-square-edit"></i>
         </vs-button>
       </template>
@@ -58,27 +67,52 @@ export default {
       fullFadeFalse: false,
       dataGen: false,
       editor: null,
+      saved: true,
+      saveTimeout: null,
+      active4: false,
+      descinput: this.noteData.preview,
     };
   },
   props: ["noteData"],
   methods: {
-    async save() {
+    editDesc(e) {
+      this.active4 = true;
+      e.stopPropagation();
+    },
+    async updateDescription() {
+      console.log('emit');
+      // Name is only for notification
+      this.$emit("onDescriptionChange", {input: this.descinput, name: this.noteData.name, id: this.noteData.id})
+    },
+    async save(skipNotify) {
       const output = await this.editor.save()
       const database = this.$firebase.database();
       const user = this.$store.state.user;
-
-      console.log(output);
 
       await database.ref(`users/${user.uid}/notes/${this.noteData.id}`).set({
         'content': output,
       });
 
-      this.$vs.notification({
-        color: "success",
-        position: "top-right",
-        title: "Saved",
-        text: `${this.noteData.name} saved successfully.`,
-      });
+      if (!skipNotify) {
+        this.$vs.notification({
+          color: "success",
+          position: "top-right",
+          title: "Saved",
+          text: `${this.noteData.name} saved successfully.`,
+        });
+      }
+
+      this.saved = true
+
+      console.log('Updated data.');
+
+    },
+    editorsChanged() {
+      clearTimeout(this.saveTimeout)
+      this.saved = false
+      this.saveTimeout = setTimeout(() => {
+        this.save(true)
+      }, 1200);
 
     },
     async showNote() {
@@ -149,6 +183,7 @@ export default {
             data: snapshot.val().content,
             tools: tools,
             logLevel: 'ERROR',
+            onChange: this.editorsChanged,
           });
         }
         else {
@@ -157,6 +192,7 @@ export default {
             tools: tools,
             placeholder: "Time to write ✏️ 😀...",
             logLevel: 'ERROR',
+            onChange: this.editorsChanged,
           });
         }
 
@@ -178,6 +214,27 @@ export default {
 </script>
 
 <style scoped>
+.conditional {
+  margin-left: 64px;
+  font-size: 18px;
+}
+
+.yei {
+  color: lime;
+  font-size: 28px;
+  margin-top: 9px;
+  margin-left: -32px;
+  position: absolute
+}
+
+.nei {
+  color: red;
+  font-size: 28px;
+  margin-top: 9px;
+  margin-left: -32px;
+  position: absolute
+}
+
 .hidden {
   display: none;
 }
@@ -198,9 +255,29 @@ h1 {
   height: 100%;
   left: 0px;
   top: 0px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
   z-index: 2;
   padding: 24px;
   overflow-y: auto;
+}
+
+.btnCenter {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.cenetered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.con-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 </style>
