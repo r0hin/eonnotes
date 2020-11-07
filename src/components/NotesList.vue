@@ -7,7 +7,7 @@
         @onDescriptionChange="updateDesc"
         class="note"
         :noteData="note"
-        v-for="note in this.notes"
+        v-for="note in aNotes"
         v-bind:key="note.id"
       >
       </Note>
@@ -30,14 +30,13 @@ export default {
   name: "NotesList",
   data() {
     return {
-      notes: [],
+      // notes: [],
     };
   },
   mounted() {
-    this.freshNotes();
   },
   components: { Note },
-  props: [],
+  props: ['aNotes'],
   methods: {
     async updateDesc(event) {
       const db = this.$firebase.firestore();
@@ -55,7 +54,7 @@ export default {
         notes: newArray
       })
 
-      this.freshNotes()
+      this.$emit('freshNotes')
 
       this.$vs.notification({
         color: "success",
@@ -63,16 +62,6 @@ export default {
         title: "Saved",
         text: `Description of ${event.name} saved successfully.`,
       });
-    },
-    async freshNotes() {
-      const db = this.$firebase.firestore();
-      const user = this.$store.state.user;
-
-      const doc = await db
-        .collection("users")
-        .doc(user.uid)
-        .get();
-      this.notes = doc.data().notes;
     },
   },
 };

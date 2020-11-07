@@ -80,7 +80,6 @@ export default {
       e.stopPropagation();
     },
     async updateDescription() {
-      console.log('emit');
       // Name is only for notification
       this.$emit("onDescriptionChange", {input: this.descinput, name: this.noteData.name, id: this.noteData.id})
     },
@@ -103,9 +102,6 @@ export default {
       }
 
       this.saved = true
-
-      console.log('Updated data.');
-
     },
     editorsChanged() {
       clearTimeout(this.saveTimeout)

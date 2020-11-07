@@ -8,10 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@editorjs/code": "^2.6.0",
     "@editorjs/editorjs": "^2.18.0",
     "@editorjs/embed": "^2.4.0",
     "@editorjs/header": "^2.6.0",
-    "@editorjs/code": "^2.6.0",
     "@editorjs/marker": "^1.2.2",
     "@editorjs/quote": "^2.4.0",
     "@editorjs/simple-image": "^1.4.0",
