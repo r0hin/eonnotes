@@ -1,6 +1,7 @@
+<center><h1>EonNotes</h1></center>
+
 <p align="center">
-    <center><h1>EonNotes</h1></center>
-    <br>
+    <br><br>
     <img src="https://img.shields.io/badge/version-0.3.x-e218f5?style=for-the-badge" />
     <img src="https://img.shields.io/github/issues/r0hin/eonnotes?style=for-the-badge" />
     <img src="https://img.shields.io/github/stars/r0hin/eonnotes?style=for-the-badge" />
@@ -11,9 +12,8 @@
     <a href="https://eonnote-78e57.web.app/">Notes</a>
     ·
     <a href="https://github.com/r0hin/eonsound/issues">Bugs & Features</a>
-    ·
+    .
     <a href="https://zoonk.surf/i?s=vTnhtXO9HstKoh8sTIlI">Support Me :)</a>
-
 </p>
 
 ## About
